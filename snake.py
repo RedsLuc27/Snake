@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import random
 
 UP = 0
 DOWN = 1
@@ -26,3 +27,25 @@ class Snake():
         elif self.direction==LEFT:
             self.snake.append((self.snake[len(self.snake)-1][0] -10 , self.snake[len(self.snake)-1][1]))
         self.snake.pop(0)
+
+    def snake_eat_apple(self, apple_pos):
+        return self.snake[-1] == apple_pos
+    
+    def snake_bigger(self):
+        self.snake.insert(0, (self.snake[0]))
+
+    def self_collision(self):
+        return self.snake[-1] in self.snake[0:-1]
+
+    def wall_collision(self, screen_size):
+        return self.snake[len(self.snake)-1][0]>=screen_size or self.snake[len(self.snake)-1][0]<0 or self.snake[len(self.snake)-1][1]>=screen_size or self.snake[len(self.snake)-1][1]<0
+
+class Apple():
+
+    def __init__(self):
+        self.apple = pygame.Surface((10,10))
+        self.apple.fill((255,0,0))
+        self.position = (0,0)
+
+    def set_random_position(self, screen_size):
+        self.position = (random.randrange(0, screen_size-10, 10), random.randrange(0, screen_size-10, 10))
