@@ -4,7 +4,7 @@ from snake import *
 import time
 
 GAME_ON = True
-SPEED = 10
+SPEED = 15
 
 
 pygame.init()
@@ -43,12 +43,14 @@ while GAME_ON:
 
     if snake.wall_collision(400) or snake.self_collision():
         Lost = pygame.font.SysFont("Arial", 60).render("You Lost", True, (255,0,0))
+        Final = pygame.font.SysFont("Arial", 30).render("This was your final score: " + str(snake.Score()), True, (255,255,255))
         screen.blit(Lost, (50,150))
+        screen.blit(Final, (30,230))
         pygame.display.update()
         time.sleep(2)
         GAME_ON = False
     
-    text = pygame.font.SysFont("Arial", 20).render("Score: " + str(len(snake.snake)-5), True, (255,255,255))
+    text = pygame.font.SysFont("Arial", 20).render("Score: " + str(snake.Score()), True, (255,255,255))
 
     screen.fill((0,0,0))
     for snake_pos in snake.snake[0:-1]:
